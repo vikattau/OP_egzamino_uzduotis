@@ -1,17 +1,5 @@
 #include "Functions.h"
 
-string pasalintiSkyrybosZenklus(const string& zodis) {
-    string rezultatas;
-
-    for (char simbolis : zodis) {
-        if (!ispunct(static_cast<unsigned char>(simbolis))) {  
-            rezultatas += simbolis;  
-        }
-    }
-
-    return rezultatas;
-}
-
 string sutvarkytiZodzius(const string& zodis) {
     string sutvarkytasZodis = zodis;
 
@@ -98,5 +86,30 @@ void tekstoAnalize(const string& failoPav) {
     
     crossRefFile.close();
     outputFile.close();
+}
+void urlSkaitymas(const string& failoPav) {
+    ifstream inputFile(failoPav);
+    if (!inputFile.is_open()) {
+        cerr << "Nepavyko atidaryti failo." << endl;
+    }
+
+    regex url_regex(R"((https?://|www\.|[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})([^\s]*)?)");
+    string eilute;
+
+    ofstream RastiURL("rasti_url.txt");
+    if (!RastiURL.is_open()) {
+        cerr << "Nepavyko atidaryti failo." << endl;
+    }
+    RastiURL << "Rasti URL : " << endl;
+    while (getline(inputFile, eilute)) {
+        smatch matches;
+        while (regex_search(eilute, matches, url_regex)) {
+            RastiURL << matches[0] << endl;
+            eilute = matches.suffix().str();
+        }
+    }
+
+    inputFile.close();
+    RastiURL.close();
 }
 

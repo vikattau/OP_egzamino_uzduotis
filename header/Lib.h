@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <codecvt> 
+#include <regex>
 
 using std::string;
 using std::cout;
@@ -29,10 +30,11 @@ using std::right;
 using std::fixed;
 using std::to_string;
 using std::to_wstring;
-using std::wstring;
-using std::wifstream;
-using std::wcerr;
-using std::locale;
+using std::vector;
+using std::regex;
+using std::smatch;
+using std::regex_search;
+
 
 
 
